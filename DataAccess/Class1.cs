@@ -1,4 +1,4 @@
-﻿namespace Entities_DTO
+﻿namespace DataAccess
 {
     public class Class1
     {
