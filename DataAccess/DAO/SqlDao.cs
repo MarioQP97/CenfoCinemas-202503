@@ -27,7 +27,7 @@ namespace DataAccess.DAO
         //Paso 2: Redefinir el constructor default de la clase, convertir en privado
         private SqlDao()
         {
-            connectionString = @"Data Source=srvdb01cenfocinemas.database.windows.net;Initial Catalog=cenfocinemas202503;User ID=sysman;Password=************;Trust Server Certificate=True";
+            connectionString = @"Data Source=srv-cenfocinemas-2503.database.windows.net; Initial Catalog=cenfocinemasdb-2503;User ID=sysman;Password=Cenfotec123!;Encrypt=True;Trust Server Certificate=True";
         }
 
         //Paso 3: Definir el metodo que expone la instancia

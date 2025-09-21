@@ -5,11 +5,11 @@ CREATE PROCEDURE CRE_USER_PR
 	@P_Email nvarchar(50),
 	@P_Password nvarchar(20),
 	@P_BirthDate datetime,
-	@P_Status nvarchar(2),
+	@P_Status nvarchar(2)
 	AS
 	BEGIN
 
-	INSERT INTO tblUsers(Created, UserCode, Name, Email, Password, Status, Birthdate)
+	INSERT INTO tblUsers(Created, UserCode, Name, Email, Password, Birthdate,Status)
 	VALUES(GETDATE(),@P_UserCode, @P_Name, @P_Email, @P_Password, @P_BirthDate, @P_Status);
 
 	END
