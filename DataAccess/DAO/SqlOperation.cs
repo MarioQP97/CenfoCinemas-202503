@@ -32,7 +32,9 @@ namespace DataAccess.DAO
         }
         public void AddDateTimeParam(string parameterName, DateTime value)
         {
-            Parameters.Add(new SqlParameter(parameterName, value));
+           Parameters.Add(new SqlParameter(parameterName, value));
+
+            //Parameters.Add(new SqlParameter(parameterName, System.Data.SqlDbType.DateTime).Value = value);
         }
 
     }

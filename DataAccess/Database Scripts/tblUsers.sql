@@ -6,7 +6,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[tblUsers](
-	[Id] [int] NOT NULL,
+	[Id] [int] identity(1,1) NOT NULL,
 	[Created] [datetime] NOT NULL,
 	[Updated] [datetime] NULL,
 	[UserCode] [nvarchar](25) NOT NULL,

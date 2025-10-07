@@ -42,6 +42,55 @@ namespace DataAccess.DAO
             return instance;
         }
 
+        //Metodo para ejecutar SP con retorno de data
+
+        public List<Dictionary<string, object>> ExecuteQueryProcedure(SqlOperation operation)
+        {
+
+            var lstResults = new List<Dictionary<string, object>>();
+            using (var conn = new SqlConnection(connectionString))
+            {
+                using (var command = new SqlCommand(operation.ProcedureName, conn)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                })
+                {
+                    //Set de los parametros
+                    foreach (var param in operation.Parameters)
+                    {
+                        command.Parameters.Add(param);
+                    }
+
+                    //Ejecuta el SP
+                    conn.Open();
+                    
+                    //Setencia que hace la lectura de la data
+                    var reader= command.ExecuteReader();
+
+                    if (reader.HasRows) 
+                    { 
+                    
+                        while (reader.Read())
+                        {
+                            var row = new Dictionary<string, object>();
+                            for (var index = 0; index < reader.FieldCount; index++)
+                            {
+                                var key=reader.GetName(index);
+                                var value = reader.GetValue(index);
+                                //Agrega los valortes de la consulta de BD al diccionario
+                                row[key]=value;
+                            }
+                            lstResults.Add(row);
+                        }
+
+                    }
+
+                }
+            }
+            return lstResults;
+        }
+
+
         //Metodo para ejecutar SP sin retorno de data
         public void ExecuteProcedure(SqlOperation operation)
         {
@@ -60,6 +109,7 @@ namespace DataAccess.DAO
                     //Ejecuta el SP
                     conn.Open();
                     command.ExecuteNonQuery();
+                    
                 }
             }
         }      

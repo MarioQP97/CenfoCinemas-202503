@@ -16,6 +16,6 @@ namespace Entities_DTO
         public string Status { get; set; }
 
 
-
+       
     }
 }
