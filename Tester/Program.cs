@@ -4,6 +4,7 @@ using Entities_DTO;
 using System;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using CoreApp;
 
 public class Program
 {
@@ -20,33 +21,36 @@ public class Program
 
         int opcion = int.Parse(Console.ReadLine());
 
+        var user = new User();
+        var movie = new Movie();
         var uCrud = new UserCrudFactory();
         var mCrud = new MovieCrudFactory();
 
         switch (opcion)
         {
             case 1:
-                var userCreate = new User();
+                
 
                 Console.WriteLine("Indique el código de usuario:");
-                userCreate.UserCode = Console.ReadLine();
+                user.UserCode = Console.ReadLine();
 
                 Console.WriteLine("Indique el nombre de usuario:");
-                userCreate.Name = Console.ReadLine();
+                user.Name = Console.ReadLine();
 
                 Console.WriteLine("Indique el email de usuario:");
-                userCreate.Email = Console.ReadLine();
+                user.Email = Console.ReadLine();
 
                 Console.WriteLine("Indique la contraseña de usuario:");
-                userCreate.Password = Console.ReadLine();
+                user.Password = Console.ReadLine();
 
                 Console.WriteLine("Indique la fecha de nacimiento (yyyy-MM-dd):");
-                userCreate.BirthDate = DateTime.Parse(Console.ReadLine());
+                user.BirthDate = DateTime.Parse(Console.ReadLine());
 
-                userCreate.Status = "AC";
+                user.Status = "AC";
 
-                uCrud.Create(userCreate);
-                Console.WriteLine("Usuario creado correctamente.");
+                var uMan = new UserManager();
+                uMan.Create(user);
+
                 break;
 
             case 2:
@@ -154,5 +158,7 @@ public class Program
                 Console.WriteLine("Opción inválida.");
                 break;
         }
+
+
     }
 }

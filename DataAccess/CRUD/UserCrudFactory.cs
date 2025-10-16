@@ -58,7 +58,7 @@ namespace DataAccess.CRUD
             var lstUsers = new List<T>();
 
             var operation = new SqlOperation();
-            operation.ProcedureName = "RET_ALL_USERS_PR";
+            operation.ProcedureName = "RET_ALL_USER_PR";
 
             var lstResult = _sqlDao.ExecuteQueryProcedure(operation);
 
@@ -73,8 +73,8 @@ namespace DataAccess.CRUD
             return lstUsers;
         }
         //Metodo que convierte una fila del diccionario en un objeto de tipo usuario
-        private User BuildIser(Dictionary<string, object> row) { 
-            
+        private User BuildIser(Dictionary<string, object> row) {
+
             var user = new User
             {
                 Id = (int)row["Id"],
@@ -87,7 +87,13 @@ namespace DataAccess.CRUD
                 BirthDate = (DateTime)row["BirthDate"],
 
 
+
             };
+            var updated = row["Updated"];
+            if (!Convert.IsDBNull(updated)) 
+            {
+                user.Updated = (DateTime)updated;
+            }
             return user;
         }
 

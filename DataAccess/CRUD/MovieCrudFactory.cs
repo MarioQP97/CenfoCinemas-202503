@@ -62,17 +62,73 @@ namespace DataAccess.CRUD
 
         public override T Retrieve<T>()
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SqlOperation() { ProcedureName = "RET_MOVIE_PR" };
+
+            var lstResults = _sqlDao.ExecuteQueryProcedure(sqlOperation);
+
+            if (lstResults.Count > 0)
+            {
+                var row = lstResults[0];
+                var movie = BuildMovie(row);
+
+                return (T)Convert.ChangeType(movie, typeof(T));
+            }
+
+            return default(T);
         }
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            var lstMovies = new List<T>();
+
+            var sqlOperation = new SqlOperation();
+            sqlOperation.ProcedureName = "RET_ALL_MOVIE_PR";
+
+            var lstResult = _sqlDao.ExecuteQueryProcedure(sqlOperation);
+
+            if (lstResult.Count > 0)
+            {
+                foreach (var item in lstResult)
+                {
+                    var movie = BuildMovie(item);
+                    lstMovies.Add((T)Convert.ChangeType(movie, typeof(T)));
+                }
+            }
+
+            return lstMovies;
         }
 
-        public override T RetrieveById<T>()
+        public override T RetrieveById<T>(int id)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SqlOperation() { ProcedureName = "RET_MOVIE_BY_ID_PR" };
+            sqlOperation.AddIntParam("P_Id", id);
+
+            var lstResults = _sqlDao.ExecuteQueryProcedure(sqlOperation);
+
+            if (lstResults.Count > 0)
+            {
+                var row = lstResults[0];
+                var movie = BuildMovie(row);
+
+                return (T)Convert.ChangeType(movie, typeof(T));
+            }
+
+            return default(T);
+        }
+
+        private Movie BuildMovie(Dictionary<string, object> row)
+        {
+            var movie = new Movie
+            {
+                Id = (int)row["Id"],
+                Title = row["Title"].ToString(),
+                Description = row["Description"].ToString(),
+                ReleaseDate = (DateTime)row["ReleaseDate"],
+                Genre = row["Genre"].ToString(),
+                Director = row["Director"].ToString()
+            };
+
+            return movie;
         }
     }
 }
